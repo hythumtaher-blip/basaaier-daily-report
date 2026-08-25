@@ -288,52 +288,53 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">2</span> العمالة اليوم</h2>
+    <h2><span class="num">2</span> مسؤول الموقع</h2>
     <div class="card-body">
-      <div class="grid3">
-        <div class="field"><label>حفر</label><input type="number" min="0" id="l_dig" value="0"></div>
-        <div class="field"><label>خرسانة</label><input type="number" min="0" id="l_con" value="0"></div>
-        <div class="field"><label>مواسير/فايبر</label><input type="number" min="0" id="l_pipe" value="0"></div>
-      </div>
-      <div class="grid3">
-        <div class="field"><label>ردم وسفلتة</label><input type="number" min="0" id="l_fill" value="0"></div>
-        <div class="field"><label>عام / مساعدين</label><input type="number" min="0" id="l_gen" value="0"></div>
-        <div class="field"><label>الإجمالي</label><input type="text" id="l_total" value="0" readonly style="font-weight:bold;background:var(--brand-light);"></div>
+      <div class="grid2">
+        <div class="field"><label>عدد المهندسين</label><input type="number" min="0" id="s_eng_count" value="0"></div>
+        <div class="field"><label>عدد المراقبين</label><input type="number" min="0" id="s_sup_count" value="0"></div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <h2><span class="num">3</span> المعدات</h2>
+    <h2><span class="num">3</span> العمالة اليوم</h2>
+    <div class="card-body">
+      <div class="field"><label>إجمالي العمالة</label><input type="number" min="0" id="l_total" value="0"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span> المعدات المستخدمة برفقة سائق</h2>
     <div class="card-body">
       <div class="field">
         <label>المعدات المستخدمة اليوم</label>
         <div class="chips" id="equipChips">
           <span class="chip" data-v="حفار">حفار</span>
           <span class="chip" data-v="بوبكات">بوبكات</span>
-          <span class="chip" data-v="دينا">دينا</span>
+          <span class="chip" data-v="دينة">دينة</span>
           <span class="chip" data-v="ترانشر">ترانشر</span>
         </div>
       </div>
       <div class="field">
-        <label>ساعات تشغيل المعدات</label>
-        <input type="text" id="f_equiphours" placeholder="مثال: حفار 6 ساعات / بوبكات 4 ساعات">
+        <label>ملاحظات</label>
+        <input type="text" id="f_equipnotes" placeholder="أي ملاحظات عن المعدات المستخدمة">
       </div>
     </div>
   </div>
 
   <div class="card">
-    <h2><span class="num">4</span> الكميات المنفذة اليوم</h2>
+    <h2><span class="num">5</span> الكميات المنفذة اليوم</h2>
     <div class="card-body">
       <div class="grid3">
-        <div class="field"><label>متر حفر</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
-        <div class="field"><label>م3 خرسانة</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
-        <div class="field"><label>متر مواسير</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
+        <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
+        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
+        <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
-        <div class="field"><label>متر فايبر</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
-        <div class="field"><label>م3 ردم</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
-        <div class="field"><label>م2 سفلتة</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
+        <div class="field"><label>فايبر (م.ط)</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
+        <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
+        <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
       </div>
       <div class="field">
         <label>أعمال أخرى</label>
@@ -343,30 +344,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">5</span> المواد</h2>
-    <div class="card-body">
-      <div class="field">
-        <label>مواد مستلمة اليوم (النوع والكمية)</label>
-        <textarea id="m_received" rows="2" placeholder="مثال: أسمنت 20 شكارة، مواسير 6 بوصة 15 متر"></textarea>
-      </div>
-      <div class="field">
-        <label>مواد متبقية بالموقع</label>
-        <textarea id="m_remaining" rows="2" placeholder="مثال: أسمنت 5 شكارة، مواسير 10 متر"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">6</span> المصروفات اليومية</h2>
-    <div class="card-body">
-      <div id="expensesWrap"></div>
-      <button type="button" class="btn-add" id="addExpenseBtn">+ إضافة مصروف آخر</button>
-      <div class="total-box">إجمالي مصروفات اليوم: <span id="expTotal">0</span> جنيه</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">7</span> ملاحظات وتوثيق</h2>
+    <h2><span class="num">6</span> ملاحظات وتوثيق</h2>
     <div class="card-body">
       <div class="field">
         <label>مشاكل أو تعطيل حدث اليوم</label>
@@ -405,15 +383,6 @@
 <footer>شركة بصائر التنفيذية للمقاولات &mdash; نظام المتابعة اليومية للمواقع</footer>
 
 <script>
-// ---- labor total ----
-const laborIds = ['l_dig','l_con','l_pipe','l_fill','l_gen'];
-function updateLaborTotal(){
-  let sum = 0;
-  laborIds.forEach(id => sum += Number(document.getElementById(id).value || 0));
-  document.getElementById('l_total').value = sum;
-}
-laborIds.forEach(id => document.getElementById(id).addEventListener('input', updateLaborTotal));
-
 // ---- equipment chips ----
 const selectedEquip = new Set();
 document.querySelectorAll('#equipChips .chip').forEach(chip => {
@@ -424,72 +393,12 @@ document.querySelectorAll('#equipChips .chip').forEach(chip => {
   });
 });
 
-// ---- expenses (dynamic rows) ----
-const expensesWrap = document.getElementById('expensesWrap');
-let expenseCount = 0;
-
-function addExpenseRow(){
-  expenseCount++;
-  const id = expenseCount;
-  const row = document.createElement('div');
-  row.className = 'expense-row';
-  row.dataset.id = id;
-  row.innerHTML = `
-    <div class="grid3">
-      <div class="field">
-        <label>نوع المصروف</label>
-        <select class="exp-type">
-          <option value="شراء مواد">شراء مواد</option>
-          <option value="يومية عمالة">يومية عمالة</option>
-          <option value="أجرة معدات">أجرة معدات</option>
-          <option value="نقل">نقل</option>
-          <option value="صيانة">صيانة</option>
-          <option value="أخرى">أخرى</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>المبلغ (جنيه)</label>
-        <input type="number" min="0" class="exp-amount" value="0">
-      </div>
-      <div class="field">
-        <label>ملاحظات</label>
-        <input type="text" class="exp-note" placeholder="تفاصيل الصرف">
-      </div>
-    </div>
-    <button type="button" class="btn-remove">حذف هذا البند</button>
-  `;
-  expensesWrap.appendChild(row);
-  row.querySelector('.exp-amount').addEventListener('input', updateExpenseTotal);
-  row.querySelector('.btn-remove').addEventListener('click', () => {
-    row.remove();
-    updateExpenseTotal();
-  });
-}
-
-function updateExpenseTotal(){
-  let sum = 0;
-  document.querySelectorAll('.exp-amount').forEach(inp => sum += Number(inp.value || 0));
-  document.getElementById('expTotal').textContent = sum.toLocaleString('ar-EG');
-}
-
-document.getElementById('addExpenseBtn').addEventListener('click', addExpenseRow);
-addExpenseRow(); // start with one row
-
 // ---- generate report text ----
 function val(id){ return document.getElementById(id).value.trim(); }
 
 function buildReportText(){
   const now = new Date();
   const stamp = now.toLocaleString('ar-EG');
-  let expensesLines = [];
-  let expTotal = 0;
-  document.querySelectorAll('.expense-row').forEach(row => {
-    const type = row.querySelector('.exp-type').value;
-    const amount = Number(row.querySelector('.exp-amount').value || 0);
-    const note = row.querySelector('.exp-note').value.trim();
-    expTotal += amount;
-    expensesLines.push(`  • ${type}: ${amount.toLocaleString('ar-EG')} جنيه${note ? ' — ' + note : ''}`);
-  });
 
   const equipList = selectedEquip.size ? Array.from(selectedEquip).join('، ') : '—';
 
@@ -502,25 +411,19 @@ function buildReportText(){
 📄 رقم أمر العمل: ${val('f_wo') || '—'}
 👷 المهندس/المشرف: ${val('f_eng') || '—'}
 
+*مسؤول الموقع:*
+عدد المهندسين: ${val('s_eng_count')} | عدد المراقبين: ${val('s_sup_count')}
+
 *العمالة:*
-حفر: ${val('l_dig')} | خرسانة: ${val('l_con')} | مواسير/فايبر: ${val('l_pipe')} | ردم وسفلتة: ${val('l_fill')} | عام: ${val('l_gen')}
 إجمالي العمالة: ${val('l_total')}
 
-*المعدات:*
+*المعدات المستخدمة برفقة سائق:*
 ${equipList}
-ساعات التشغيل: ${val('f_equiphours') || '—'}
+ملاحظات: ${val('f_equipnotes') || '—'}
 
 *الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | خرسانة: ${val('q_con')} م3 | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | ردم: ${val('q_fill')} م3 | سفلتة: ${val('q_asphalt')} م2
+حفر: ${val('q_dig')} م.ط | خرسانة: ${val('q_con')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | ردم: ${val('q_fill')} م.ط | سفلتة: ${val('q_asphalt')} م2
 أعمال أخرى: ${val('q_other') || '—'}
-
-*المواد:*
-مستلمة اليوم: ${val('m_received') || '—'}
-متبقية بالموقع: ${val('m_remaining') || '—'}
-
-*المصروفات:*
-${expensesLines.length ? expensesLines.join('\n') : '  لا يوجد'}
-الإجمالي: ${expTotal.toLocaleString('ar-EG')} جنيه
 
 *مشاكل / تعطيل:*
 ${val('f_issues') || 'لا يوجد'}
@@ -528,7 +431,7 @@ ${val('f_issues') || 'لا يوجد'}
 مقدّم التقرير: ${val('f_reporter') || '—'}
 وقت الإدخال: ${stamp}`;
 
-  return {text, expTotal};
+  return {text};
 }
 
 function validateRequired(){
@@ -620,32 +523,21 @@ document.getElementById('copyBtn').addEventListener('click', () => {
 
 document.getElementById('downloadBtn').addEventListener('click', () => {
   if(!validateRequired()) return;
-  const expTypes = [];
-  const expAmounts = [];
-  const expNotes = [];
-  document.querySelectorAll('.expense-row').forEach(row => {
-    expTypes.push(row.querySelector('.exp-type').value);
-    expAmounts.push(row.querySelector('.exp-amount').value || '0');
-    expNotes.push(row.querySelector('.exp-note').value.trim());
-  });
-  const expTotal = expAmounts.reduce((a,b)=>a+Number(b||0),0);
 
   const cols = [
     'التاريخ','الموقع','رقم أمر الشغل','المهندس/المشرف',
-    'عمال حفر','عمال خرسانة','عمال مواسير/فايبر','عمال ردم وسفلتة','عمال عام','إجمالي العمالة',
-    'المعدات المستخدمة','ساعات التشغيل',
-    'متر حفر','م3 خرسانة','متر مواسير','متر فايبر','م3 ردم','م2 سفلتة','أعمال أخرى',
-    'مواد مستلمة','مواد متبقية',
-    'أنواع المصروفات','قيم المصروفات','ملاحظات المصروفات','إجمالي المصروفات',
+    'عدد المهندسين','عدد المراقبين',
+    'إجمالي العمالة',
+    'المعدات المستخدمة','ملاحظات المعدات',
+    'حفر (م.ط)','خرسانة (م.ط)','مواسير (م.ط)','فايبر (م.ط)','ردم (م.ط)','سفلتة (م2)','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
   const row = [
     val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
-    val('l_dig'), val('l_con'), val('l_pipe'), val('l_fill'), val('l_gen'), val('l_total'),
-    Array.from(selectedEquip).join(' / '), val('f_equiphours'),
+    val('s_eng_count'), val('s_sup_count'),
+    val('l_total'),
+    Array.from(selectedEquip).join(' / '), val('f_equipnotes'),
     val('q_dig'), val('q_con'), val('q_pipe'), val('q_fiber'), val('q_fill'), val('q_asphalt'), val('q_other'),
-    val('m_received'), val('m_remaining'),
-    expTypes.join(' / '), expAmounts.join(' / '), expNotes.join(' / '), expTotal,
     val('f_issues'), val('f_reporter')
   ];
 
@@ -671,10 +563,6 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     document.querySelectorAll('input[type=number]').forEach(el => el.value='0');
     document.querySelectorAll('#equipChips .chip').forEach(c => c.classList.remove('active'));
     selectedEquip.clear();
-    expensesWrap.innerHTML='';
-    expenseCount = 0;
-    addExpenseRow();
-    updateExpenseTotal();
     document.getElementById('resultArea').style.display='none';
   }
 });
