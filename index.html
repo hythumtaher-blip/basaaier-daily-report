@@ -339,6 +339,7 @@
     <h2><span class="num">3</span> العمالة اليوم</h2>
     <div class="card-body">
       <div class="field"><label>إجمالي العمالة</label><input type="number" min="0" id="l_total" value="0"></div>
+      <div class="field"><label>حارس ليلي</label><input type="number" min="0" id="l_guard" value="0"></div>
     </div>
   </div>
 
@@ -464,7 +465,7 @@ function buildReportText(){
 عدد المهندسين: ${val('s_eng_count')} | عدد المراقبين: ${val('s_sup_count')}
 
 *العمالة:*
-إجمالي العمالة: ${val('l_total')}
+إجمالي العمالة: ${val('l_total')} | حارس ليلي: ${val('l_guard')}
 
 *المعدات المستخدمة برفقة سائق:*
 ${equipList}
@@ -576,7 +577,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   const cols = [
     'التاريخ','الموقع','رقم أمر الشغل','المهندس/المشرف',
     'عدد المهندسين','عدد المراقبين',
-    'إجمالي العمالة',
+    'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
     'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','سفلتة (م2)','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
@@ -586,7 +587,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   const row = [
     val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
     val('s_eng_count'), val('s_sup_count'),
-    val('l_total'),
+    val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
     val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_asphalt'), val('q_other'),
     val('f_issues'), val('f_reporter')
