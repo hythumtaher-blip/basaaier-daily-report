@@ -144,6 +144,44 @@
     background:var(--brand);
     color:#fff;
   }
+  .equip-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:4px;
+  }
+  @media (max-width:520px){
+    .equip-grid{grid-template-columns:1fr;}
+  }
+  .equip-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    background:#fbfdfc;
+  }
+  .equip-item .equip-name{
+    font-size:.9rem;
+    color:var(--ink);
+    font-weight:bold;
+  }
+  .equip-item input[type=number]{
+    width:70px;
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    font-size:.9rem;
+    text-align:center;
+    background:#fff;
+    color:var(--ink);
+  }
+  .equip-item input[type=number]:focus{
+    outline:2px solid var(--brand);
+    outline-offset:1px;
+  }
   .expense-row{
     border:1px dashed var(--line);
     border-radius:8px;
@@ -308,12 +346,24 @@
     <h2><span class="num">4</span> المعدات المستخدمة برفقة سائق</h2>
     <div class="card-body">
       <div class="field">
-        <label>المعدات المستخدمة اليوم</label>
-        <div class="chips" id="equipChips">
-          <span class="chip" data-v="حفار">حفار</span>
-          <span class="chip" data-v="بوبكات">بوبكات</span>
-          <span class="chip" data-v="دينا">دينا</span>
-          <span class="chip" data-v="ترانشر">ترانشر</span>
+        <label>المعدات المستخدمة اليوم وعددها</label>
+        <div class="equip-grid" id="equipGrid">
+          <div class="equip-item">
+            <span class="equip-name">حفار</span>
+            <input type="number" min="0" class="equip-count" data-v="حفار" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">بوبكات</span>
+            <input type="number" min="0" class="equip-count" data-v="بوبكات" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">دينا</span>
+            <input type="number" min="0" class="equip-count" data-v="دينا" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">ترانشر</span>
+            <input type="number" min="0" class="equip-count" data-v="ترانشر" value="0">
+          </div>
         </div>
       </div>
       <div class="field">
@@ -328,12 +378,12 @@
     <div class="card-body">
       <div class="grid3">
         <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
-        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
+        <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
         <div class="field"><label>فايبر (م.ط)</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
-        <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
+        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
         <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
       </div>
       <div class="field">
@@ -383,15 +433,13 @@
 <footer>شركة بصائر التنفيذية للمقاولات &mdash; نظام المتابعة اليومية للمواقع</footer>
 
 <script>
-// ---- equipment chips ----
-const selectedEquip = new Set();
-document.querySelectorAll('#equipChips .chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    const v = chip.dataset.v;
-    if(selectedEquip.has(v)){ selectedEquip.delete(v); chip.classList.remove('active'); }
-    else { selectedEquip.add(v); chip.classList.add('active'); }
-  });
-});
+// ---- equipment counts ----
+function getEquipCounts(){
+  // returns array of {name, count} for equipment with count > 0
+  return Array.from(document.querySelectorAll('#equipGrid .equip-count'))
+    .map(inp => ({ name: inp.dataset.v, count: Number(inp.value) || 0 }))
+    .filter(e => e.count > 0);
+}
 
 // ---- generate report text ----
 function val(id){ return document.getElementById(id).value.trim(); }
@@ -400,7 +448,8 @@ function buildReportText(){
   const now = new Date();
   const stamp = now.toLocaleString('ar-EG');
 
-  const equipList = selectedEquip.size ? Array.from(selectedEquip).join('، ') : '—';
+  const equipCounts = getEquipCounts();
+  const equipList = equipCounts.length ? equipCounts.map(e => `${e.name}: ${e.count}`).join('، ') : '—';
 
   const text =
 `*شركة بصائر التنفيذية للمقاولات*
@@ -422,7 +471,7 @@ ${equipList}
 ملاحظات: ${val('f_equipnotes') || '—'}
 
 *الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | خرسانة: ${val('q_con')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | ردم: ${val('q_fill')} م.ط | سفلتة: ${val('q_asphalt')} م2
+حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
 أعمال أخرى: ${val('q_other') || '—'}
 
 *مشاكل / تعطيل:*
@@ -529,15 +578,17 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'عدد المهندسين','عدد المراقبين',
     'إجمالي العمالة',
     'المعدات المستخدمة','ملاحظات المعدات',
-    'حفر (م.ط)','خرسانة (م.ط)','مواسير (م.ط)','فايبر (م.ط)','ردم (م.ط)','سفلتة (م2)','أعمال أخرى',
+    'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','سفلتة (م2)','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
+  const equipCounts = getEquipCounts();
+  const equipStr = equipCounts.length ? equipCounts.map(e => `${e.name}(${e.count})`).join(' / ') : '';
   const row = [
     val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
     val('s_eng_count'), val('s_sup_count'),
     val('l_total'),
-    Array.from(selectedEquip).join(' / '), val('f_equipnotes'),
-    val('q_dig'), val('q_con'), val('q_pipe'), val('q_fiber'), val('q_fill'), val('q_asphalt'), val('q_other'),
+    equipStr, val('f_equipnotes'),
+    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_asphalt'), val('q_other'),
     val('f_issues'), val('f_reporter')
   ];
 
@@ -561,8 +612,6 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   if(confirm('هل تريد تفريغ كل بيانات الفورم؟')){
     document.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el => el.value='');
     document.querySelectorAll('input[type=number]').forEach(el => el.value='0');
-    document.querySelectorAll('#equipChips .chip').forEach(c => c.classList.remove('active'));
-    selectedEquip.clear();
     document.getElementById('resultArea').style.display='none';
   }
 });
