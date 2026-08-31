@@ -281,6 +281,18 @@
     content:" *";
     color:#c0392b;
   }
+  #supervisorNamesContainer{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+  }
+  #supervisorNamesContainer .field{
+    margin-bottom:10px;
+  }
+  #supervisorNamesEmpty{
+    font-size:.82rem;
+    color:var(--muted);
+  }
   footer{
     text-align:center;
     color:var(--muted);
@@ -331,6 +343,9 @@
       <div class="grid2">
         <div class="field"><label>عدد المهندسين</label><input type="number" min="0" id="s_eng_count" value="0"></div>
         <div class="field"><label>عدد المراقبين</label><input type="number" min="0" id="s_sup_count" value="0"></div>
+      </div>
+      <div id="supervisorNamesContainer">
+        <p id="supervisorNamesEmpty">أدخل عدد المراقبين أعلاه ليظهر لك حقل اسم لكل مراقب.</p>
       </div>
     </div>
   </div>
@@ -442,6 +457,51 @@ function getEquipCounts(){
     .filter(e => e.count > 0);
 }
 
+// ---- supervisor names (dynamic based on عدد المراقبين) ----
+function renderSupervisorNames(){
+  const container = document.getElementById('supervisorNamesContainer');
+  const rawCount = Number(document.getElementById('s_sup_count').value);
+  const count = Number.isFinite(rawCount) && rawCount > 0 ? Math.floor(rawCount) : 0;
+
+  // keep any names already typed so changing the count doesn't wipe them
+  const existing = Array.from(container.querySelectorAll('.sup-name-input')).map(inp => inp.value);
+
+  container.innerHTML = '';
+
+  if(count === 0){
+    const empty = document.createElement('p');
+    empty.id = 'supervisorNamesEmpty';
+    empty.textContent = 'أدخل عدد المراقبين أعلاه ليظهر لك حقل اسم لكل مراقب.';
+    container.appendChild(empty);
+    return;
+  }
+
+  for(let i = 0; i < count; i++){
+    const field = document.createElement('div');
+    field.className = 'field';
+
+    const label = document.createElement('label');
+    label.className = 'req';
+    label.textContent = `اسم المراقب ${i + 1}`;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'sup-name-input';
+    input.placeholder = `اكتب اسم المراقب رقم ${i + 1}`;
+    input.value = existing[i] || '';
+
+    field.appendChild(label);
+    field.appendChild(input);
+    container.appendChild(field);
+  }
+}
+
+function getSupervisorNames(){
+  return Array.from(document.querySelectorAll('.sup-name-input')).map(inp => inp.value.trim());
+}
+
+document.getElementById('s_sup_count').addEventListener('input', renderSupervisorNames);
+
 // ---- generate report text ----
 function val(id){ return document.getElementById(id).value.trim(); }
 
@@ -451,6 +511,9 @@ function buildReportText(){
 
   const equipCounts = getEquipCounts();
   const equipList = equipCounts.length ? equipCounts.map(e => `${e.name}: ${e.count}`).join('، ') : '—';
+
+  const supNames = getSupervisorNames();
+  const supNamesList = supNames.length ? supNames.map((n, i) => `مراقب ${i + 1}: ${n || '—'}`).join('، ') : '—';
 
   const text =
 `*شركة بصائر التنفيذية للمقاولات*
@@ -463,6 +526,7 @@ function buildReportText(){
 
 *مسؤول الموقع:*
 عدد المهندسين: ${val('s_eng_count')} | عدد المراقبين: ${val('s_sup_count')}
+أسماء المراقبين: ${supNamesList}
 
 *العمالة:*
 إجمالي العمالة: ${val('l_total')} | حارس ليلي: ${val('l_guard')}
@@ -492,6 +556,14 @@ function validateRequired(){
     ['f_reporter','اسم مقدّم التقرير']
   ];
   const missing = required.filter(([id]) => !val(id));
+
+  const supNames = getSupervisorNames();
+  supNames.forEach((name, i) => {
+    if(!name){
+      missing.push([null, `اسم المراقب ${i + 1}`]);
+    }
+  });
+
   if(missing.length){
     alert('برجاء تعبئة الحقول التالية أولاً:\n' + missing.map(m => '- ' + m[1]).join('\n'));
     return false;
@@ -576,7 +648,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
 
   const cols = [
     'التاريخ','الموقع','رقم أمر الشغل','المهندس/المشرف',
-    'عدد المهندسين','عدد المراقبين',
+    'عدد المهندسين','عدد المراقبين','أسماء المراقبين',
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
     'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','سفلتة (م2)','أعمال أخرى',
@@ -584,9 +656,10 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   ];
   const equipCounts = getEquipCounts();
   const equipStr = equipCounts.length ? equipCounts.map(e => `${e.name}(${e.count})`).join(' / ') : '';
+  const supNamesStr = getSupervisorNames().join(' / ');
   const row = [
     val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
-    val('s_eng_count'), val('s_sup_count'),
+    val('s_eng_count'), val('s_sup_count'), supNamesStr,
     val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
     val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_asphalt'), val('q_other'),
@@ -613,9 +686,13 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   if(confirm('هل تريد تفريغ كل بيانات الفورم؟')){
     document.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el => el.value='');
     document.querySelectorAll('input[type=number]').forEach(el => el.value='0');
+    renderSupervisorNames();
     document.getElementById('resultArea').style.display='none';
   }
 });
+
+// initial render on page load
+renderSupervisorNames();
 </script>
 
 </body>
