@@ -400,7 +400,11 @@
       <div class="grid3">
         <div class="field"><label>فايبر (م.ط)</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
         <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
+        <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
+      </div>
+      <div class="grid3">
         <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
+        <div class="field"><label>نقل سيفتي (عدد)</label><input type="number" min="0" step="0.1" id="q_safety_transport" value="0"></div>
       </div>
       <div class="field">
         <label>أعمال أخرى</label>
@@ -490,8 +494,13 @@ function renderSupervisorNames(){
     input.placeholder = `اكتب اسم المراقب رقم ${i + 1}`;
     input.value = existing[i] || '';
 
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'يتم إدراج الاسم ثنائي أو ثلاثي';
+
     field.appendChild(label);
     field.appendChild(input);
+    field.appendChild(hint);
     container.appendChild(field);
   }
 }
@@ -536,7 +545,7 @@ ${equipList}
 ملاحظات: ${val('f_equipnotes') || '—'}
 
 *الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
+حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
 أعمال أخرى: ${val('q_other') || '—'}
 
 *مشاكل / تعطيل:*
@@ -651,7 +660,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'عدد المهندسين','عدد المراقبين','أسماء المراقبين',
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
-    'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','سفلتة (م2)','أعمال أخرى',
+    'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','مناهل','سفلتة (م2)','نقل سيفتي','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
   const equipCounts = getEquipCounts();
@@ -662,7 +671,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     val('s_eng_count'), val('s_sup_count'), supNamesStr,
     val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
-    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_asphalt'), val('q_other'),
+    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_manholes'), val('q_asphalt'), val('q_safety_transport'), val('q_other'),
     val('f_issues'), val('f_reporter')
   ];
 
