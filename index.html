@@ -449,7 +449,7 @@
     <div class="card-body">
       <div class="grid3">
         <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
-        <div class="field"><label>إجمالي الحفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
+        <div class="field"><label>إجمالي الحفر التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
         <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
@@ -727,7 +727,7 @@ ${(() => {
   })()}
 
 *الكميات المنفذة:*
-حفر: ${val('q_dig')} م.ط | إجمالي الحفر: ${val('q_dig_total')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
+حفر: ${val('q_dig')} م.ط | إجمالي الحفر التراكمي: ${val('q_dig_total')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
 أعمال أخرى: ${val('q_other') || '—'}
 
 *مشاكل / تعطيل:*
@@ -843,7 +843,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
     'تصاريح الحفر',
-    'حفر (م.ط)','إجمالي الحفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','مناهل','سفلتة (م2)','نقل سيفتي','أعمال أخرى',
+    'حفر (م.ط)','إجمالي الحفر التراكمي (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','مناهل','سفلتة (م2)','نقل سيفتي','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
   const equipCounts = getEquipCounts();
