@@ -190,6 +190,53 @@
     background:#fafcfb;
   }
   .expense-row .grid3{margin-bottom:8px;}
+  .permit-row{
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:10px;
+    background:#fafcfb;
+  }
+  .permit-row .grid3{margin-bottom:8px;}
+  .permit-row .grid3 .field:last-child{margin-bottom:0;}
+  .status-toggle{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .status-btn{
+    flex:1;
+    min-width:80px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--muted);
+    border-radius:7px;
+    padding:9px 4px;
+    font-size:.8rem;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+  }
+  .status-btn.done.active{
+    background:var(--brand);
+    border-color:var(--brand);
+    color:#fff;
+  }
+  .status-btn.progress.active{
+    background:#e8f0fd;
+    border-color:#3b6fd6;
+    color:#3b6fd6;
+  }
+  .status-btn.pending.active{
+    background:var(--amber-bg);
+    border-color:var(--amber);
+    color:var(--amber);
+  }
+  .permit-row-header{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:6px;
+  }
   .btn-remove{
     background:#fdeaea;
     color:#b3261e;
@@ -390,10 +437,19 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">5</span> الكميات المنفذة اليوم</h2>
+    <h2><span class="num">5</span> تصاريح الحفر</h2>
+    <div class="card-body">
+      <div id="permitsContainer"></div>
+      <button type="button" class="btn-add" id="addPermitBtn">+ إضافة تصريح آخر</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span> الكميات المنفذة</h2>
     <div class="card-body">
       <div class="grid3">
         <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
+        <div class="field"><label>إجمالي الحفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
         <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
@@ -414,7 +470,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">6</span> ملاحظات وتوثيق</h2>
+    <h2><span class="num">7</span> ملاحظات وتوثيق</h2>
     <div class="card-body">
       <div class="field">
         <label>مشاكل أو تعطيل حدث اليوم</label>
@@ -511,6 +567,125 @@ function getSupervisorNames(){
 
 document.getElementById('s_sup_count').addEventListener('input', renderSupervisorNames);
 
+// ---- drilling permits (تصاريح الحفر) — dynamic, add/remove, each with completion status ----
+let permitCounter = 0;
+
+function createPermitRow(data){
+  permitCounter++;
+  const id = permitCounter;
+  data = data || { no:'', length:0, status:'pending' };
+
+  const row = document.createElement('div');
+  row.className = 'permit-row';
+  row.dataset.permitId = id;
+
+  const header = document.createElement('div');
+  header.className = 'permit-row-header';
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn-remove';
+  removeBtn.textContent = 'حذف التصريح';
+  removeBtn.addEventListener('click', () => {
+    row.remove();
+    // make sure at least one row always remains
+    if(document.querySelectorAll('#permitsContainer .permit-row').length === 0){
+      addPermitRow();
+    }
+  });
+  header.appendChild(removeBtn);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid3';
+
+  // رقم التصريح
+  const f1 = document.createElement('div');
+  f1.className = 'field';
+  f1.innerHTML = '<label>رقم التصريح</label>';
+  const inpNo = document.createElement('input');
+  inpNo.type = 'text';
+  inpNo.className = 'permit-no';
+  inpNo.placeholder = '123456789';
+  inpNo.value = data.no;
+  f1.appendChild(inpNo);
+
+  // إجمالي الطول
+  const f2 = document.createElement('div');
+  f2.className = 'field';
+  f2.innerHTML = '<label>إجمالي الطول (م.ط)</label>';
+  const inpLen = document.createElement('input');
+  inpLen.type = 'number';
+  inpLen.min = '0';
+  inpLen.step = '0.1';
+  inpLen.className = 'permit-length';
+  inpLen.value = data.length;
+  f2.appendChild(inpLen);
+
+  // أعمال التصريح
+  const f3 = document.createElement('div');
+  f3.className = 'field';
+  f3.innerHTML = '<label>أعمال التصريح</label>';
+  const toggle = document.createElement('div');
+  toggle.className = 'status-toggle';
+
+  const btnDone = document.createElement('button');
+  btnDone.type = 'button';
+  btnDone.className = 'status-btn done';
+  btnDone.textContent = 'تم الانتهاء';
+
+  const btnProgress = document.createElement('button');
+  btnProgress.type = 'button';
+  btnProgress.className = 'status-btn progress';
+  btnProgress.textContent = 'جاري العمل';
+
+  const btnPending = document.createElement('button');
+  btnPending.type = 'button';
+  btnPending.className = 'status-btn pending';
+  btnPending.textContent = 'لم يتم بعد';
+
+  function setStatus(s){
+    row.dataset.status = s;
+    btnDone.classList.toggle('active', s === 'done');
+    btnProgress.classList.toggle('active', s === 'progress');
+    btnPending.classList.toggle('active', s === 'pending');
+  }
+  btnDone.addEventListener('click', () => setStatus('done'));
+  btnProgress.addEventListener('click', () => setStatus('progress'));
+  btnPending.addEventListener('click', () => setStatus('pending'));
+  setStatus(data.status);
+
+  toggle.appendChild(btnDone);
+  toggle.appendChild(btnProgress);
+  toggle.appendChild(btnPending);
+  f3.appendChild(toggle);
+
+  grid.appendChild(f1);
+  grid.appendChild(f2);
+  grid.appendChild(f3);
+
+  row.appendChild(header);
+  row.appendChild(grid);
+  return row;
+}
+
+function addPermitRow(data){
+  const container = document.getElementById('permitsContainer');
+  container.appendChild(createPermitRow(data));
+}
+
+document.getElementById('addPermitBtn').addEventListener('click', () => addPermitRow());
+
+function getPermits(){
+  return Array.from(document.querySelectorAll('#permitsContainer .permit-row')).map(row => {
+    const s = row.dataset.status;
+    const statusLabel = s === 'done' ? 'تم الانتهاء' : (s === 'progress' ? 'جاري العمل' : 'لم يتم بعد');
+    return {
+      no: row.querySelector('.permit-no').value.trim(),
+      length: Number(row.querySelector('.permit-length').value) || 0,
+      status: statusLabel
+    };
+  });
+}
+
 // ---- generate report text ----
 function val(id){ return document.getElementById(id).value.trim(); }
 
@@ -544,8 +719,15 @@ function buildReportText(){
 ${equipList}
 ملاحظات: ${val('f_equipnotes') || '—'}
 
-*الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
+*تصاريح الحفر:*
+${(() => {
+    const permits = getPermits();
+    if(!permits.length) return '—';
+    return permits.map((p, i) => `تصريح ${i + 1}: رقم ${p.no || '—'} | الطول ${p.length} م.ط | الحالة: ${p.status}`).join('\n');
+  })()}
+
+*الكميات المنفذة:*
+حفر: ${val('q_dig')} م.ط | إجمالي الحفر: ${val('q_dig_total')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
 أعمال أخرى: ${val('q_other') || '—'}
 
 *مشاكل / تعطيل:*
@@ -660,18 +842,21 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'عدد المهندسين','عدد المراقبين','أسماء المراقبين',
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
-    'حفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','مناهل','سفلتة (م2)','نقل سيفتي','أعمال أخرى',
+    'تصاريح الحفر',
+    'حفر (م.ط)','إجمالي الحفر (م.ط)','ردم (م.ط)','مواسير (م.ط)','فايبر (م.ط)','خرسانة (م.ط)','مناهل','سفلتة (م2)','نقل سيفتي','أعمال أخرى',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
   const equipCounts = getEquipCounts();
   const equipStr = equipCounts.length ? equipCounts.map(e => `${e.name}(${e.count})`).join(' / ') : '';
   const supNamesStr = getSupervisorNames().join(' / ');
+  const permitsStr = getPermits().map(p => `${p.no || '—'}|${p.length}م.ط|${p.status}`).join(' / ');
   const row = [
     val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
     val('s_eng_count'), val('s_sup_count'), supNamesStr,
     val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
-    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_manholes'), val('q_asphalt'), val('q_safety_transport'), val('q_other'),
+    permitsStr,
+    val('q_dig'), val('q_dig_total'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_manholes'), val('q_asphalt'), val('q_safety_transport'), val('q_other'),
     val('f_issues'), val('f_reporter')
   ];
 
@@ -696,12 +881,15 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     document.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el => el.value='');
     document.querySelectorAll('input[type=number]').forEach(el => el.value='0');
     renderSupervisorNames();
+    document.getElementById('permitsContainer').innerHTML = '';
+    addPermitRow();
     document.getElementById('resultArea').style.display='none';
   }
 });
 
 // initial render on page load
 renderSupervisorNames();
+addPermitRow();
 </script>
 
 </body>
