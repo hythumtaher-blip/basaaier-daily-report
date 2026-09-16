@@ -655,6 +655,12 @@ function createPermitRow(data){
   btnProgress.className = 'status-btn progress';
   btnProgress.textContent = 'جاري العمل';
 
+  
+  const btnPending = document.createElement('button');
+  btnPending.type = 'button';
+  btnPending.className = 'status-btn pending';
+  btnPending.textContent = 'لم يتم بعد';
+
 
   function setStatus(s){
     row.dataset.status = s;
