@@ -453,8 +453,8 @@
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
-        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
-        <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
+         <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
+         <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
       </div>
       <div class="grid3">
         <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
@@ -466,15 +466,15 @@
     </div>
   </div>
  <div class="card">
-    <h2><span class="num">7</span>  التجميع التراكمي للكميات</h2>
+    <h2><span class="num">7</span>  التجميع التراكمي للكبينة</h2>
     <div class="card-body">
       <div class="grid3">
         <div class="field"><label>إجمالي الحفر التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
         <div class="field"><label>اجمالي المواسير تراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe_total" value="0"></div>
       </div>
       <div class="grid3">
-        <div class="field"><label>اجمالي الخرسانة تراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_con_total" value="0"></div>
         <div class="field"><label>اجمالي المناهل تراكمي (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes_total" value="0"></div>
+        <div class="field"><label>اجمالي الخرسانة تراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_con_total" value="0"></div>
       </div>
       <div class="grid3">
         <div class="field"><label>اجمالي الاسفلت تراكمي (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
@@ -655,10 +655,6 @@ function createPermitRow(data){
   btnProgress.className = 'status-btn progress';
   btnProgress.textContent = 'جاري العمل';
 
-  const btnPending = document.createElement('button');
-  btnPending.type = 'button';
-  btnPending.className = 'status-btn pending';
-  btnPending.textContent = 'لم يتم بعد';
 
   function setStatus(s){
     row.dataset.status = s;
