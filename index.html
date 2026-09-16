@@ -445,7 +445,7 @@
   </div>
 
   <div class="card">
-    <h2><span class="num">6</span> الكميات المنفذة</h2>
+    <h2><span class="num">6</span>  الكميات المنفذة اليوم</h2>
     <div class="card-body">
       <div class="grid3">
         <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
@@ -454,13 +454,31 @@
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
-        <div class="field"><label>فايبر (م.ط)</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
         <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
         <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
       </div>
       <div class="grid3">
         <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
-        <div class="field"><label>نقل سيفتي (عدد)</label><input type="number" min="0" step="0.1" id="q_safety_transport" value="0"></div>
+      </div>
+      <div class="field">
+        <label>أعمال أخرى</label>
+        <textarea id="q_other" rows="2" placeholder="اكتب أي أعمال منفذة غير مذكورة أعلاه مع الكمية"></textarea>
+      </div>
+    </div>
+  </div>
+ <div class="card">
+    <h2><span class="num">7</span>  التجميع التراكمي للكميات</h2>
+    <div class="card-body">
+      <div class="grid3">
+        <div class="field"><label>إجمالي الحفر التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
+        <div class="field"><label>اجمالي المواسير تراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe_total" value="0"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>اجمالي الخرسانة تراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_con_total" value="0"></div>
+        <div class="field"><label>اجمالي المناهل تراكمي (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes_total" value="0"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>اجمالي الاسفلت تراكمي (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
       </div>
       <div class="field">
         <label>أعمال أخرى</label>
@@ -469,8 +487,9 @@
     </div>
   </div>
 
+  
   <div class="card">
-    <h2><span class="num">7</span> ملاحظات وتوثيق</h2>
+    <h2><span class="num">8</span> ملاحظات وتوثيق</h2>
     <div class="card-body">
       <div class="field">
         <label>مشاكل أو تعطيل حدث اليوم</label>
