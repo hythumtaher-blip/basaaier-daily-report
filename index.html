@@ -178,7 +178,7 @@
   }
   .status-btn{
     flex:1;
-    min-width:80px;
+    min-width:100px;
     border:1.5px solid var(--line);
     background:#fff;
     color:var(--muted);
@@ -198,11 +198,6 @@
     background:#e8f0fd;
     border-color:#3b6fd6;
     color:#3b6fd6;
-  }
-  .status-btn.pending.active{
-    background:var(--amber-bg);
-    border-color:var(--amber);
-    color:var(--amber);
   }
   .permit-row-header{
     display:flex;
@@ -315,7 +310,7 @@
 <header>
   <h1>شركة بصائر التنفيذية للمقاولات</h1>
   <h2>مشاريع الاتصالات</h2>
-  <p>التقرير اليومي لموقع تنفيذ الكبائن — حفر · خرسانة · مواسير . فايبر · ردم · سفلتة</p>
+  <p>التقرير اليومي لموقع تنفيذ الكبائن — حفر · خرسانة · مواسير · ردم · سفلتة</p>
 </header>
 
 <div class="wrap">
@@ -415,13 +410,9 @@
         <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
-        <div class="field"><label>فايبر (م.ط)</label><input type="number" min="0" step="0.1" id="q_fiber" value="0"></div>
-        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
         <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
-      </div>
-      <div class="grid3">
+        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
         <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
-        <div class="field"><label>نقل سيفتي (عدد)</label><input type="number" min="0" step="0.1" id="q_safety_transport" value="0"></div>
       </div>
       <div class="field">
         <label>أعمال أخرى</label>
@@ -547,7 +538,7 @@ let permitCounter = 0;
 function createPermitRow(data){
   permitCounter++;
   const id = permitCounter;
-  data = data || { no:'', length:0, status:'pending' };
+  data = data || { no:'', length:0, status:'progress' };
 
   const row = document.createElement('div');
   row.className = 'permit-row';
@@ -607,25 +598,17 @@ function createPermitRow(data){
   btnProgress.className = 'status-btn progress';
   btnProgress.textContent = 'جاري العمل';
 
-  const btnPending = document.createElement('button');
-  btnPending.type = 'button';
-  btnPending.className = 'status-btn pending';
-  btnPending.textContent = 'لم يتم بعد';
-
   function setStatus(s){
     row.dataset.status = s;
     btnDone.classList.toggle('active', s === 'done');
     btnProgress.classList.toggle('active', s === 'progress');
-    btnPending.classList.toggle('active', s === 'pending');
   }
   btnDone.addEventListener('click', () => setStatus('done'));
   btnProgress.addEventListener('click', () => setStatus('progress'));
-  btnPending.addEventListener('click', () => setStatus('pending'));
-  setStatus(data.status);
+  setStatus(data.status || 'progress');
 
   toggle.appendChild(btnDone);
   toggle.appendChild(btnProgress);
-  toggle.appendChild(btnPending);
   f3.appendChild(toggle);
 
   grid.appendChild(f1);
@@ -647,7 +630,7 @@ document.getElementById('addPermitBtn').addEventListener('click', () => addPermi
 function getPermits(){
   return Array.from(document.querySelectorAll('#permitsContainer .permit-row')).map(row => {
     const s = row.dataset.status;
-    const statusLabel = s === 'done' ? 'تم الانتهاء' : (s === 'progress' ? 'جاري العمل' : 'لم يتم بعد');
+    const statusLabel = s === 'done' ? 'تم الانتهاء' : 'جاري العمل';
     return {
       no: row.querySelector('.permit-no').value.trim(),
       length: Number(row.querySelector('.permit-length').value) || 0,
@@ -697,7 +680,7 @@ ${(() => {
   })()}
 
 *الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | فايبر: ${val('q_fiber')} م.ط | خرسانة: ${val('q_con')} م.ط | مناهل: ${val('q_manholes')} | سفلتة: ${val('q_asphalt')} م2 | نقل سيفتي: ${val('q_safety_transport')}
+حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | مناهل: ${val('q_manholes')} | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
 أعمال أخرى: ${val('q_other') || '—'}
 
 *الإجمالي التراكمي للكبينة:*
@@ -778,7 +761,7 @@ document.getElementById('waBtn').addEventListener('click', () => {
 
 document.getElementById('selectBtn').addEventListener('click', () => {
   selectResultTextManually();
-  alert('تم تحديد النص — استخدم قائمة النسخ لإنسخ النص يدويًا.');
+  alert('تم تحديد النص — استخدم قائمة النسخ لنسخ النص يدويًا.');
 });
 
 document.getElementById('copyBtn').addEventListener('click', () => {
@@ -814,7 +797,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
     'تصاريح الحفر',
-    'حفر يومي (م.ط)','ردم يومي (م.ط)','مواسير يومي (م.ط)','فايبر يومي (م.ط)','خرسانة يومي (م.ط)','مناهل يومي','سفلتة يومي (م2)','نقل سيفتي يومي','أعمال أخرى',
+    'حفر يومي (م.ط)','ردم يومي (م.ط)','مواسير يومي (م.ط)','مناهل يومي','خرسانة يومي (م.ط)','سفلتة يومي (م2)','أعمال أخرى',
     'إجمالي الحفر التراكمي','إجمالي المواسير التراكمي','إجمالي المناهل التراكمي','إجمالي الخرسانة التراكمي','إجمالي الأسفلت التراكمي',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
@@ -828,7 +811,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
     permitsStr,
-    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_fiber'), val('q_con'), val('q_manholes'), val('q_asphalt'), val('q_safety_transport'), val('q_other'),
+    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_manholes'), val('q_con'), val('q_asphalt'), val('q_other'),
     val('q_dig_total'), val('q_pipe_total'), val('q_manholes_total'), val('q_con_total'), val('q_asphalt_total'),
     val('f_issues'), val('f_reporter')
   ];
