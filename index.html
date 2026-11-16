@@ -404,13 +404,10 @@
   <div class="card">
     <h2><span class="num">6</span> الكميات المنفذة اليوم</h2>
     <div class="card-body">
-      <div class="grid2">
+      <div class="grid3">
         <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
         <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>مواسير 32 مم (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe32" value="0"></div>
-        <div class="field"><label>مواسير 20 مم (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe20" value="0"></div>
+        <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
       </div>
       <div class="grid3">
         <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
@@ -427,15 +424,12 @@
   <div class="card">
     <h2><span class="num">7</span> الإجمالي التراكمي للكبينة</h2>
     <div class="card-body">
-      <div class="grid2">
+      <div class="grid3">
         <div class="field"><label>إجمالي الحفر التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
+        <div class="field"><label>إجمالي المواسير التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe_total" value="0"></div>
         <div class="field"><label>إجمالي المناهل التراكمي (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes_total" value="0"></div>
       </div>
-      <div class="grid2">
-        <div class="field"><label>إجمالي مواسير 32 مم التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe32_total" value="0"></div>
-        <div class="field"><label>إجمالي مواسير 20 مم التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe20_total" value="0"></div>
-      </div>
-      <div class="grid2">
+      <div class="grid3">
         <div class="field"><label>إجمالي الخرسانة التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_con_total" value="0"></div>
         <div class="field"><label>إجمالي الأسفلت التراكمي (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt_total" value="0"></div>
       </div>
@@ -686,11 +680,11 @@ ${(() => {
   })()}
 
 *الكميات المنفذة اليوم:*
-حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير 32 مم: ${val('q_pipe32')} م.ط | مواسير 20 مم: ${val('q_pipe20')} م.ط | مناهل: ${val('q_manholes')} | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
+حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | مناهل: ${val('q_manholes')} | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
 أعمال أخرى: ${val('q_other') || '—'}
 
 *الإجمالي التراكمي للكبينة:*
-إجمالي الحفر التراكمي: ${val('q_dig_total')} م.ط | إجمالي مواسير 32 مم التراكمي: ${val('q_pipe32_total')} م.ط | إجمالي مواسير 20 مم التراكمي: ${val('q_pipe20_total')} م.ط | إجمالي المناهل التراكمي: ${val('q_manholes_total')} | إجمالي الخرسانة التراكمي: ${val('q_con_total')} م.ط | إجمالي الأسفلت التراكمي: ${val('q_asphalt_total')} م2
+إجمالي الحفر التراكمي: ${val('q_dig_total')} م.ط | إجمالي المواسير التراكمي: ${val('q_pipe_total')} م.ط | إجمالي المناهل التراكمي: ${val('q_manholes_total')} | إجمالي الخرسانة التراكمي: ${val('q_con_total')} م.ط | إجمالي الأسفلت التراكمي: ${val('q_asphalt_total')} م2
 
 *مشاكل / تعطيل:*
 ${val('f_issues') || 'لا يوجد'}
@@ -803,8 +797,8 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     'إجمالي العمالة','حارس ليلي',
     'المعدات المستخدمة','ملاحظات المعدات',
     'تصاريح الحفر',
-    'حفر يومي (م.ط)','ردم يومي (م.ط)','مواسير 32 مم يومي (م.ط)','مواسير 20 مم يومي (م.ط)','مناهل يومي','خرسانة يومي (م.ط)','سفلتة يومي (م2)','أعمال أخرى',
-    'إجمالي الحفر التراكمي','إجمالي مواسير 32 مم التراكمي','إجمالي مواسير 20 مم التراكمي','إجمالي المناهل التراكمي','إجمالي الخرسانة التراكمي','إجمالي الأسفلت التراكمي',
+    'حفر يومي (م.ط)','ردم يومي (م.ط)','مواسير يومي (م.ط)','مناهل يومي','خرسانة يومي (م.ط)','سفلتة يومي (م2)','أعمال أخرى',
+    'إجمالي الحفر التراكمي','إجمالي المواسير التراكمي','إجمالي المناهل التراكمي','إجمالي الخرسانة التراكمي','إجمالي الأسفلت التراكمي',
     'مشاكل/تعطيل','مقدّم التقرير'
   ];
   const equipCounts = getEquipCounts();
@@ -817,8 +811,858 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
     val('l_total'), val('l_guard'),
     equipStr, val('f_equipnotes'),
     permitsStr,
-    val('q_dig'), val('q_fill'), val('q_pipe32'), val('q_pipe20'), val('q_manholes'), val('q_con'), val('q_asphalt'), val('q_other'),
-    val('q_dig_total'), val('q_pipe32_total'), val('q_pipe20_total'), val('q_manholes_total'), val('q_con_total'), val('q_asphalt_total'),
+    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_manholes'), val('q_con'), val('q_asphalt'), val('q_other'),
+    val('q_dig_total'), val('q_pipe_total'), val('q_manholes_total'), val('q_con_total'), val('q_asphalt_total'),
+    val('f_issues'), val('f_reporter')
+  ];
+
+  function csvEscape(v){
+    v = String(v ?? '');
+    if(v.includes(',') || v.includes('"') || v.includes('\n')){
+      v = '"' + v.replace(/"/g,'""') + '"';
+    }
+    return v;
+  }
+  const csv = '\uFEFF' + cols.map(csvEscape).join(',') + '\n' + row.map(csvEscape).join(',');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  const fname = `تقرير_${val('f_site') || 'موقع'}_${val('f_date') || ''}.csv`;
+  link.download = fname;
+  link.click();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if(confirm('هل تريد تفريغ كل بيانات الفورم؟')){
+    document.querySelectorAll('input[type=text], input[type=date], textarea').forEach(el => el.value='');
+    document.querySelectorAll('input[type=number]').forEach(el => el.value='0');
+    renderSupervisorNames();
+    document.getElementById('permitsContainer').innerHTML = '';
+    addPermitRow();
+    document.getElementById('resultArea').style.display='none';
+  }
+});
+
+renderSupervisorNames();
+addPermitRow();
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شركة بصائر التنفيذية للمقاولات — مشاريع الاتصالات - التقرير اليومي للموقع</title>
+<style>
+  :root{
+    --brand:#007c40;
+    --brand-dark:#00552b;
+    --brand-light:#e6f4ec;
+    --ink:#1b2420;
+    --muted:#5c6b63;
+    --line:#d8e3dc;
+    --paper:#ffffff;
+    --bg:#f2f6f3;
+    --amber:#b8860b;
+    --amber-bg:#fdf6e3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Tahoma","Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding-bottom:60px;
+  }
+  header{
+    background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);
+    color:#fff;
+    padding:28px 20px 22px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  }
+  header h1{
+    margin:0 0 6px;
+    font-size:1.5rem;
+    letter-spacing:.5px;
+  }
+  header p{
+    margin:0;
+    font-size:.95rem;
+    opacity:.9;
+  }
+  .wrap{
+    max-width:760px;
+    margin:20px auto;
+    padding:0 14px;
+  }
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:10px;
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .card h2{
+    background:var(--brand-light);
+    color:var(--brand-dark);
+    margin:0;
+    padding:12px 16px;
+    font-size:1.02rem;
+    border-bottom:2px solid var(--brand);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .card h2 .num{
+    background:var(--brand);
+    color:#fff;
+    width:24px;height:24px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;justify-content:center;
+    font-size:.8rem;
+  }
+  .card-body{
+    padding:14px 16px 18px;
+  }
+  .field{
+    margin-bottom:12px;
+  }
+  .field label{
+    display:block;
+    font-size:.88rem;
+    color:var(--muted);
+    margin-bottom:5px;
+    font-weight:bold;
+  }
+  .field input[type=text],
+  .field input[type=date],
+  .field input[type=number],
+  .field select,
+  .field textarea{
+    width:100%;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    border-radius:7px;
+    font-size:.95rem;
+    font-family:inherit;
+    background:#fbfdfc;
+    color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--brand);
+    outline-offset:1px;
+    background:#fff;
+  }
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .grid3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+  }
+  @media (max-width:520px){
+    .grid3{grid-template-columns:1fr 1fr;}
+  }
+  .hint{
+    font-size:.78rem;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .equip-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:4px;
+  }
+  @media (max-width:520px){
+    .equip-grid{grid-template-columns:1fr;}
+  }
+  .equip-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    background:#fbfdfc;
+  }
+  .equip-item .equip-name{
+    font-size:.9rem;
+    color:var(--ink);
+    font-weight:bold;
+  }
+  .equip-item input[type=number]{
+    width:70px;
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    font-size:.9rem;
+    text-align:center;
+    background:#fff;
+    color:var(--ink);
+  }
+  .equip-item input[type=number]:focus{
+    outline:2px solid var(--brand);
+    outline-offset:1px;
+  }
+  .permit-row{
+    border:1px dashed var(--line);
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:10px;
+    background:#fafcfb;
+  }
+  .permit-row .grid3{margin-bottom:8px;}
+  .permit-row .grid3 .field:last-child{margin-bottom:0;}
+  .status-toggle{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .status-btn{
+    flex:1;
+    min-width:100px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--muted);
+    border-radius:7px;
+    padding:9px 4px;
+    font-size:.8rem;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+  }
+  .status-btn.done.active{
+    background:var(--brand);
+    border-color:var(--brand);
+    color:#fff;
+  }
+  .status-btn.progress.active{
+    background:#e8f0fd;
+    border-color:#3b6fd6;
+    color:#3b6fd6;
+  }
+  .permit-row-header{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:6px;
+  }
+  .btn-remove{
+    background:#fdeaea;
+    color:#b3261e;
+    border:1px solid #f2c6c4;
+    border-radius:6px;
+    padding:5px 10px;
+    font-size:.8rem;
+    cursor:pointer;
+  }
+  .btn-add{
+    background:var(--brand-light);
+    color:var(--brand-dark);
+    border:1px dashed var(--brand);
+    border-radius:7px;
+    padding:8px 12px;
+    font-size:.88rem;
+    cursor:pointer;
+    width:100%;
+  }
+  .actions{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 14px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .btn-main{
+    flex:1;
+    min-width:180px;
+    background:var(--brand);
+    color:#fff;
+    border:none;
+    border-radius:9px;
+    padding:14px;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  .btn-main:active{background:var(--brand-dark);}
+  .btn-secondary{
+    flex:1;
+    min-width:140px;
+    background:#fff;
+    color:var(--brand-dark);
+    border:1.5px solid var(--brand);
+    border-radius:9px;
+    padding:14px;
+    font-size:1rem;
+    font-weight:bold;
+    cursor:pointer;
+  }
+  #resultArea{
+    max-width:760px;
+    margin:18px auto 0;
+    padding:0 14px;
+    display:none;
+  }
+  #resultBox{
+    background:#0f2a1c;
+    color:#d8f5e3;
+    border-radius:10px;
+    padding:16px;
+    white-space:pre-wrap;
+    font-family:"Courier New",monospace;
+    font-size:.85rem;
+    line-height:1.6;
+    direction:rtl;
+    max-height:340px;
+    overflow-y:auto;
+  }
+  .result-actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .req::after{
+    content:" *";
+    color:#c0392b;
+  }
+  #supervisorNamesContainer{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+  }
+  #supervisorNamesContainer .field{
+    margin-bottom:10px;
+  }
+  #supervisorNamesEmpty{
+    font-size:.82rem;
+    color:var(--muted);
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.78rem;
+    margin-top:24px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>شركة بصائر التنفيذية للمقاولات</h1>
+  <h2>مشاريع الاتصالات</h2>
+  <p>التقرير اليومي لموقع تنفيذ الكبائن — حفر · خرسانة · مواسير · ردم · سفلتة</p>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2><span class="num">1</span> بيانات أساسية</h2>
+    <div class="card-body">
+      <div class="grid2">
+        <div class="field">
+          <label class="req">التاريخ</label>
+          <input type="date" id="f_date">
+        </div>
+        <div class="field">
+          <label class="req">اسم الموقع / رقم الكبينة</label>
+          <input type="text" id="f_site" placeholder="مثال: كبينة الهاجدية 009">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>رقم أمر العمل</label>
+          <input type="text" id="f_wo" placeholder="مثال: WO-2026-014">
+        </div>
+        <div class="field">
+          <label class="req">اسم المهندس / المشرف</label>
+          <input type="text" id="f_eng" placeholder="اسم المسؤول عن الموقع">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span> مسؤول الموقع</h2>
+    <div class="card-body">
+      <div class="grid2">
+        <div class="field"><label>عدد المهندسين</label><input type="number" min="0" id="s_eng_count" value="0"></div>
+        <div class="field"><label>عدد المراقبين</label><input type="number" min="0" id="s_sup_count" value="0"></div>
+      </div>
+      <div id="supervisorNamesContainer">
+        <p id="supervisorNamesEmpty">أدخل عدد المراقبين أعلاه ليظهر لك حقل اسم لكل مراقب.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span> العمالة اليوم</h2>
+    <div class="card-body">
+      <div class="field"><label>إجمالي العمالة</label><input type="number" min="0" id="l_total" value="0"></div>
+      <div class="field"><label>حارس ليلي</label><input type="number" min="0" id="l_guard" value="0"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span> المعدات المستخدمة برفقة سائق</h2>
+    <div class="card-body">
+      <div class="field">
+        <label>المعدات المستخدمة اليوم وعددها</label>
+        <div class="equip-grid" id="equipGrid">
+          <div class="equip-item">
+            <span class="equip-name">حفار</span>
+            <input type="number" min="0" class="equip-count" data-v="حفار" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">بوبكات</span>
+            <input type="number" min="0" class="equip-count" data-v="بوبكات" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">دينا</span>
+            <input type="number" min="0" class="equip-count" data-v="دينا" value="0">
+          </div>
+          <div class="equip-item">
+            <span class="equip-name">ترانشر</span>
+            <input type="number" min="0" class="equip-count" data-v="ترانشر" value="0">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>ملاحظات</label>
+        <input type="text" id="f_equipnotes" placeholder="أي ملاحظات عن المعدات المستخدمة">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span> تصاريح الحفر</h2>
+    <div class="card-body">
+      <div id="permitsContainer"></div>
+      <button type="button" class="btn-add" id="addPermitBtn">+ إضافة تصريح آخر</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span> الكميات المنفذة اليوم</h2>
+    <div class="card-body">
+      <div class="grid3">
+        <div class="field"><label>حفر (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig" value="0"></div>
+        <div class="field"><label>ردم (م.ط)</label><input type="number" min="0" step="0.1" id="q_fill" value="0"></div>
+        <div class="field"><label>مواسير (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe" value="0"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>مناهل (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes" value="0"></div>
+        <div class="field"><label>خرسانة (م.ط)</label><input type="number" min="0" step="0.1" id="q_con" value="0"></div>
+        <div class="field"><label>سفلتة (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt" value="0"></div>
+      </div>
+      <div class="field">
+        <label>أعمال أخرى</label>
+        <textarea id="q_other" rows="2" placeholder="اكتب أي أعمال منفذة غير مذكورة أعلاه مع الكمية"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span> الإجمالي التراكمي للكبينة</h2>
+    <div class="card-body">
+      <div class="grid3">
+        <div class="field"><label>إجمالي الحفر التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_dig_total" value="0"></div>
+        <div class="field"><label>إجمالي المواسير التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_pipe_total" value="0"></div>
+        <div class="field"><label>إجمالي المناهل التراكمي (عدد)</label><input type="number" min="0" step="0.1" id="q_manholes_total" value="0"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>إجمالي الخرسانة التراكمي (م.ط)</label><input type="number" min="0" step="0.1" id="q_con_total" value="0"></div>
+        <div class="field"><label>إجمالي الأسفلت التراكمي (م2)</label><input type="number" min="0" step="0.1" id="q_asphalt_total" value="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">8</span> ملاحظات وتوثيق</h2>
+    <div class="card-body">
+      <div class="field">
+        <label>مشاكل أو تعطيل حدث اليوم</label>
+        <textarea id="f_issues" rows="2" placeholder="اكتب 'لا يوجد' إن لم توجد مشاكل"></textarea>
+      </div>
+      <div class="field">
+        <label class="req">اسم مقدّم التقرير</label>
+        <input type="text" id="f_reporter" placeholder="الاسم">
+      </div>
+      <p class="hint">ملحوظة: الصور وصور الإيصالات تُرفع وتُرسل مع هذا التقرير عبر جروب الواتساب الخاص بالموقع.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="actions">
+  <button type="button" class="btn-main" id="generateBtn">إنشاء التقرير</button>
+  <button type="button" class="btn-secondary" id="resetBtn">تفريغ الفورم</button>
+</div>
+
+<div id="resultArea">
+  <div class="card">
+    <h2><span class="num">✓</span> التقرير جاهز للإرسال</h2>
+    <div class="card-body">
+      <div id="resultBox"></div>
+      <div class="result-actions">
+        <button type="button" class="btn-main" id="waBtn">📲 فتح واتساب وإرسال التقرير مباشرة</button>
+        <button type="button" class="btn-secondary" id="copyBtn">نسخ النص</button>
+        <button type="button" class="btn-secondary" id="selectBtn">تحديد النص يدويًا</button>
+        <button type="button" class="btn-secondary" id="downloadBtn">تنزيل كملف CSV</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>شركة بصائر التنفيذية للمقاولات &mdash; نظام المتابعة اليومية للمواقع</footer>
+
+<script>
+// ---- equipment counts ----
+function getEquipCounts(){
+  return Array.from(document.querySelectorAll('#equipGrid .equip-count'))
+    .map(inp => ({ name: inp.dataset.v, count: Number(inp.value) || 0 }))
+    .filter(e => e.count > 0);
+}
+
+// ---- supervisor names ----
+function renderSupervisorNames(){
+  const container = document.getElementById('supervisorNamesContainer');
+  const rawCount = Number(document.getElementById('s_sup_count').value);
+  const count = Number.isFinite(rawCount) && rawCount > 0 ? Math.floor(rawCount) : 0;
+
+  const existing = Array.from(container.querySelectorAll('.sup-name-input')).map(inp => inp.value);
+
+  container.innerHTML = '';
+
+  if(count === 0){
+    const empty = document.createElement('p');
+    empty.id = 'supervisorNamesEmpty';
+    empty.textContent = 'أدخل عدد المراقبين أعلاه ليظهر لك حقل اسم لكل مراقب.';
+    container.appendChild(empty);
+    return;
+  }
+
+  for(let i = 0; i < count; i++){
+    const field = document.createElement('div');
+    field.className = 'field';
+
+    const label = document.createElement('label');
+    label.className = 'req';
+    label.textContent = `اسم المراقب ${i + 1}`;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'sup-name-input';
+    input.placeholder = `اكتب اسم المراقب رقم ${i + 1}`;
+    input.value = existing[i] || '';
+
+    const hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'يتم إدراج الاسم ثنائي أو ثلاثي';
+
+    field.appendChild(label);
+    field.appendChild(input);
+    field.appendChild(hint);
+    container.appendChild(field);
+  }
+}
+
+function getSupervisorNames(){
+  return Array.from(document.querySelectorAll('.sup-name-input')).map(inp => inp.value.trim());
+}
+
+document.getElementById('s_sup_count').addEventListener('input', renderSupervisorNames);
+
+// ---- drilling permits ----
+let permitCounter = 0;
+
+function createPermitRow(data){
+  permitCounter++;
+  const id = permitCounter;
+  data = data || { no:'', length:0, status:'progress' };
+
+  const row = document.createElement('div');
+  row.className = 'permit-row';
+  row.dataset.permitId = id;
+
+  const header = document.createElement('div');
+  header.className = 'permit-row-header';
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn-remove';
+  removeBtn.textContent = 'حذف التصريح';
+  removeBtn.addEventListener('click', () => {
+    row.remove();
+    if(document.querySelectorAll('#permitsContainer .permit-row').length === 0){
+      addPermitRow();
+    }
+  });
+  header.appendChild(removeBtn);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid3';
+
+  const f1 = document.createElement('div');
+  f1.className = 'field';
+  f1.innerHTML = '<label>رقم التصريح</label>';
+  const inpNo = document.createElement('input');
+  inpNo.type = 'text';
+  inpNo.className = 'permit-no';
+  inpNo.placeholder = '123456789';
+  inpNo.value = data.no;
+  f1.appendChild(inpNo);
+
+  const f2 = document.createElement('div');
+  f2.className = 'field';
+  f2.innerHTML = '<label>إجمالي الطول (م.ط)</label>';
+  const inpLen = document.createElement('input');
+  inpLen.type = 'number';
+  inpLen.min = '0';
+  inpLen.step = '0.1';
+  inpLen.className = 'permit-length';
+  inpLen.value = data.length;
+  f2.appendChild(inpLen);
+
+  const f3 = document.createElement('div');
+  f3.className = 'field';
+  f3.innerHTML = '<label>أعمال التصريح</label>';
+  const toggle = document.createElement('div');
+  toggle.className = 'status-toggle';
+
+  const btnDone = document.createElement('button');
+  btnDone.type = 'button';
+  btnDone.className = 'status-btn done';
+  btnDone.textContent = 'تم الانتهاء';
+
+  const btnProgress = document.createElement('button');
+  btnProgress.type = 'button';
+  btnProgress.className = 'status-btn progress';
+  btnProgress.textContent = 'جاري العمل';
+
+  function setStatus(s){
+    row.dataset.status = s;
+    btnDone.classList.toggle('active', s === 'done');
+    btnProgress.classList.toggle('active', s === 'progress');
+  }
+  btnDone.addEventListener('click', () => setStatus('done'));
+  btnProgress.addEventListener('click', () => setStatus('progress'));
+  setStatus(data.status || 'progress');
+
+  toggle.appendChild(btnDone);
+  toggle.appendChild(btnProgress);
+  f3.appendChild(toggle);
+
+  grid.appendChild(f1);
+  grid.appendChild(f2);
+  grid.appendChild(f3);
+
+  row.appendChild(header);
+  row.appendChild(grid);
+  return row;
+}
+
+function addPermitRow(data){
+  const container = document.getElementById('permitsContainer');
+  container.appendChild(createPermitRow(data));
+}
+
+document.getElementById('addPermitBtn').addEventListener('click', () => addPermitRow());
+
+function getPermits(){
+  return Array.from(document.querySelectorAll('#permitsContainer .permit-row')).map(row => {
+    const s = row.dataset.status;
+    const statusLabel = s === 'done' ? 'تم الانتهاء' : 'جاري العمل';
+    return {
+      no: row.querySelector('.permit-no').value.trim(),
+      length: Number(row.querySelector('.permit-length').value) || 0,
+      status: statusLabel
+    };
+  });
+}
+
+// ---- generate report text ----
+function val(id){ return document.getElementById(id).value.trim(); }
+
+function buildReportText(){
+  const now = new Date();
+  const stamp = now.toLocaleString('ar-EG');
+
+  const equipCounts = getEquipCounts();
+  const equipList = equipCounts.length ? equipCounts.map(e => `${e.name}: ${e.count}`).join('، ') : '—';
+
+  const supNames = getSupervisorNames();
+  const supNamesList = supNames.length ? supNames.map((n, i) => `مراقب ${i + 1}: ${n || '—'}`).join('، ') : '—';
+
+  const text =
+`*شركة بصائر التنفيذية للمقاولات*
+*التقرير اليومي للموقع*
+
+📅 التاريخ: ${val('f_date') || '—'}
+📍 الموقع: ${val('f_site') || '—'}
+📄 رقم أمر العمل: ${val('f_wo') || '—'}
+👷 المهندس/المشرف: ${val('f_eng') || '—'}
+
+*مسؤول الموقع:*
+عدد المهندسين: ${val('s_eng_count')} | عدد المراقبين: ${val('s_sup_count')}
+أسماء المراقبين: ${supNamesList}
+
+*العمالة:*
+إجمالي العمالة: ${val('l_total')} | حارس ليلي: ${val('l_guard')}
+
+*المعدات المستخدمة برفقة سائق:*
+${equipList}
+ملاحظات: ${val('f_equipnotes') || '—'}
+
+*تصاريح الحفر:*
+${(() => {
+    const permits = getPermits();
+    if(!permits.length) return '—';
+    return permits.map((p, i) => `تصريح ${i + 1}: رقم ${p.no || '—'} | الطول ${p.length} م.ط | الحالة: ${p.status}`).join('\n');
+  })()}
+
+*الكميات المنفذة اليوم:*
+حفر: ${val('q_dig')} م.ط | ردم: ${val('q_fill')} م.ط | مواسير: ${val('q_pipe')} م.ط | مناهل: ${val('q_manholes')} | خرسانة: ${val('q_con')} م.ط | سفلتة: ${val('q_asphalt')} م2
+أعمال أخرى: ${val('q_other') || '—'}
+
+*الإجمالي التراكمي للكبينة:*
+إجمالي الحفر التراكمي: ${val('q_dig_total')} م.ط | إجمالي المواسير التراكمي: ${val('q_pipe_total')} م.ط | إجمالي المناهل التراكمي: ${val('q_manholes_total')} | إجمالي الخرسانة التراكمي: ${val('q_con_total')} م.ط | إجمالي الأسفلت التراكمي: ${val('q_asphalt_total')} م2
+
+*مشاكل / تعطيل:*
+${val('f_issues') || 'لا يوجد'}
+
+مقدّم التقرير: ${val('f_reporter') || '—'}
+وقت الإدخال: ${stamp}`;
+
+  return {text};
+}
+
+function validateRequired(){
+  const required = [
+    ['f_date','التاريخ'],
+    ['f_site','اسم الموقع'],
+    ['f_eng','اسم المهندس/المشرف'],
+    ['f_reporter','اسم مقدّم التقرير']
+  ];
+  const missing = required.filter(([id]) => !val(id));
+
+  const supNames = getSupervisorNames();
+  supNames.forEach((name, i) => {
+    if(!name){
+      missing.push([null, `اسم المراقب ${i + 1}`]);
+    }
+  });
+
+  if(missing.length){
+    alert('برجاء تعبئة الحقول التالية أولاً:\n' + missing.map(m => '- ' + m[1]).join('\n'));
+    return false;
+  }
+  return true;
+}
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+  if(!validateRequired()) return;
+  const {text} = buildReportText();
+  document.getElementById('resultBox').textContent = text;
+  document.getElementById('resultArea').style.display = 'block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+});
+
+function legacyCopy(text){
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.top = '-9999px';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  ta.setSelectionRange(0, text.length);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+  document.body.removeChild(ta);
+  return ok;
+}
+
+function selectResultTextManually(){
+  const box = document.getElementById('resultBox');
+  if(window.getSelection && document.createRange){
+    const range = document.createRange();
+    range.selectNodeContents(box);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+}
+
+document.getElementById('waBtn').addEventListener('click', () => {
+  const text = document.getElementById('resultBox').textContent;
+  const encoded = encodeURIComponent(text);
+  window.location.href = `https://wa.me/?text=${encoded}`;
+});
+
+document.getElementById('selectBtn').addEventListener('click', () => {
+  selectResultTextManually();
+  alert('تم تحديد النص — استخدم قائمة النسخ لنسخ النص يدويًا.');
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const text = document.getElementById('resultBox').textContent;
+
+  if(navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(() => {
+      alert('تم نسخ التقرير — الصقه الآن في جروب الواتساب.');
+    }).catch(() => {
+      if(legacyCopy(text)){
+        alert('تم نسخ التقرير — الصقه الآن في جروب الواتساب.');
+      } else {
+        selectResultTextManually();
+        alert('تعذر النسخ التلقائي. تم تحديد النص لك — اضغط نسخ يدويًا.');
+      }
+    });
+  } else {
+    if(legacyCopy(text)){
+      alert('تم نسخ التقرير — الصقه الآن في جروب الواتساب.');
+    } else {
+      selectResultTextManually();
+      alert('تعذر النسخ التلقائي. تم تحديد النص لك — اضغط نسخ يدويًا.');
+    }
+  }
+});
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  if(!validateRequired()) return;
+
+  const cols = [
+    'التاريخ','الموقع','رقم أمر الشغل','المهندس/المشرف',
+    'عدد المهندسين','عدد المراقبين','أسماء المراقبين',
+    'إجمالي العمالة','حارس ليلي',
+    'المعدات المستخدمة','ملاحظات المعدات',
+    'تصاريح الحفر',
+    'حفر يومي (م.ط)','ردم يومي (م.ط)','مواسير يومي (م.ط)','مناهل يومي','خرسانة يومي (م.ط)','سفلتة يومي (م2)','أعمال أخرى',
+    'إجمالي الحفر التراكمي','إجمالي المواسير التراكمي','إجمالي المناهل التراكمي','إجمالي الخرسانة التراكمي','إجمالي الأسفلت التراكمي',
+    'مشاكل/تعطيل','مقدّم التقرير'
+  ];
+  const equipCounts = getEquipCounts();
+  const equipStr = equipCounts.length ? equipCounts.map(e => `${e.name}(${e.count})`).join(' / ') : '';
+  const supNamesStr = getSupervisorNames().join(' / ');
+  const permitsStr = getPermits().map(p => `${p.no || '—'}|${p.length}م.ط|${p.status}`).join(' / ');
+  const row = [
+    val('f_date'), val('f_site'), val('f_wo'), val('f_eng'),
+    val('s_eng_count'), val('s_sup_count'), supNamesStr,
+    val('l_total'), val('l_guard'),
+    equipStr, val('f_equipnotes'),
+    permitsStr,
+    val('q_dig'), val('q_fill'), val('q_pipe'), val('q_manholes'), val('q_con'), val('q_asphalt'), val('q_other'),
+    val('q_dig_total'), val('q_pipe_total'), val('q_manholes_total'), val('q_con_total'), val('q_asphalt_total'),
     val('f_issues'), val('f_reporter')
   ];
 
